@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet author="liquibase-docs" id="dropTable-authorities">
+    	<preConditions onFail="MARK_RAN">
+    		<tableExists tableName="authorities"/>
+    	</preConditions>
+    	<dropTable
+    		cascadeConstraints="true"
+            tableName="authorities"
+        />
+     </changeSet>
+     
+     <changeSet author="liquibase-docs" id="dropTable-client">
+    	<preConditions onFail="MARK_RAN">
+    		<tableExists schemaName="PUBLIC" tableName="client"/>
+    	</preConditions>
+    	<dropTable 
+    		schemaName="PUBLIC"
+    		cascadeConstraints="true"
+            tableName="client"
+        />
+     </changeSet>
+     
+     <changeSet author="liquibase-docs" id="dropTable-users">
+    	<preConditions onFail="MARK_RAN">
+    		<tableExists schemaName="PUBLIC" tableName="users"/>
+    	</preConditions>
+    	<dropTable 
+    		schemaName="PUBLIC"
+    		cascadeConstraints="true"
+            tableName="users"
+        />
+     </changeSet>
+     
+     <changeSet author="liquibase-docs" id="dropTable-countries">
+    	<preConditions onFail="MARK_RAN">
+    		<tableExists schemaName="PUBLIC" tableName="countries"/>
+    	</preConditions>
+    	<dropTable 
+    		schemaName="PUBLIC"
+    		cascadeConstraints="true"
+            tableName="countries"
+        />
+     </changeSet>
+
+    <changeSet author="admin" id="1">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="password" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="enabled" type="TINYINT" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="authorities">
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false" foreignKeyName="fk_username_authority" references="users(username)"/>
+            </column>
+            <column name="authority" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="client">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(128)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="VARCHAR(128)">
+                <constraints nullable="false" />
+            </column>
+            <column name="username" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(45)" defaultValue="NULL">
+            </column>
+            <column name="address" type="VARCHAR(128)">
+                <constraints nullable="false" />
+            </column>
+            <column name="country" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="INT" defaultValue="NULL">
+                <constraints nullable="false" foreignKeyName="fk_client_user" references="users(id)"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="countries">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <rollback>
+        	<dropTable tableName="authorities"/>
+        	<dropTable tableName="client"/>
+            <dropTable tableName="users"/>
+            <dropTable tableName="countries"/>
+        </rollback>
+    </changeSet>
+    
+    <changeSet author="admin" id="auth-ix">
+    		<createIndex
+            	indexName="ix_auth_name"
+            	tableName="authorities"
+            	tablespace="A String"
+            	unique="true">
+        		<column name="username"/>
+        		<column name="authority"/>
+    		</createIndex>
+		</changeSet>
+</databaseChangeLog>

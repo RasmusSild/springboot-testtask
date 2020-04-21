@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="admin" id="2">
+        <insert tableName="users">
+            <column name="username" value="john"/>
+            <column name="password" value="$2y$10$5eJYvDwoTmU7tX4pZ33Nf.Nqxa8JupBbcRkjlJ8JuVuHlgmqDg2PK"/>
+            <column name="enabled" valueNumeric="1"/>
+        </insert>
+        
+        <insert tableName="users">
+            <column name="username" value="steve"/>
+            <column name="password" value="$2y$10$nVJ2GMFZ5gejrpQZWYeqP.GaV//radb6zTmFlVHuBoC7F22TD/D4a"/>
+            <column name="enabled" valueNumeric="1"/>
+        </insert>
+        
+        <insert tableName="users">
+            <column name="username" value="larry"/>
+            <column name="password" value="$2y$10$x/Ehbakbo1ioynYFFCWcsOxR/okhwVT6bSIA64cpZE9wDezQk/ahy"/>
+            <column name="enabled" valueNumeric="1"/>
+        </insert>
+        
+        <insert tableName="authorities">
+            <column name="username" value="john"/>
+            <column name="authority" value="ADMIN"/>
+        </insert>
+        
+        <insert tableName="authorities">
+            <column name="username" value="steve"/>
+            <column name="authority" value="ADMIN"/>
+        </insert>
+        
+        <insert tableName="authorities">
+            <column name="username" value="larry"/>
+            <column name="authority" value="ADMIN"/>
+        </insert>
+        
+        <insert tableName="countries">
+            <column name="name" value="Estonia"/>
+        </insert>
+        
+        <insert tableName="countries">
+            <column name="name" value="Latvia"/>
+        </insert>
+        
+        <insert tableName="countries">
+            <column name="name" value="Lithuania"/>
+        </insert>
+        
+        <insert tableName="countries">
+            <column name="name" value="Finland"/>
+        </insert>
+        
+        <insert tableName="countries">
+            <column name="name" value="Sweden"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
